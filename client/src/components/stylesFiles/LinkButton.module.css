@@ -1,0 +1,17 @@
+.button {
+    background-color: midnightblue;
+    color: white;
+    font-size: 2vw;
+    border-radius: 100px;
+    padding-right: 7.5%;
+    padding-left: 7.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border: solid 2px white;
+    box-shadow: rgba(218, 31, 239, 0.59) 0px 0px 22px 4px;
+    transition: background-color 0.5s ease;
+}
+
+.button:hover {
+    background-color: darkmagenta;
+}

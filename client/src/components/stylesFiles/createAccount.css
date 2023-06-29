@@ -1,0 +1,82 @@
+
+
+.createAccountList li{
+    margin-top: 5%;
+}
+
+:focus {
+    outline: none;
+}
+
+
+.textField {
+    border: 0;
+    padding: 4px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    text-align: center;
+    font: 22px/35px "Lato", Arial, sans-serif;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+}
+
+.focus-border{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3399FF;
+    transition: 0.4s;
+}
+
+
+.textField ~ .focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3399FF;
+    transition: 0.4s;
+}
+.textField:focus ~ .focus-border, .has-content.textField ~ .focus-border {
+    width: 100%;
+    transition: 0.4s;
+}
+.textField ~ label{
+    /*position: absolute;*/
+    width: 100%;
+    top: 9px;
+    color: deeppink;
+    transition: 0.3s;
+    z-index: -1;
+    letter-spacing: 0.5px;
+}
+.textField:focus ~ label, .has-content.textField ~ label{
+    top: -16px;
+    font-size: 12px;
+    color: #3399FF;
+    transition: 0.3s;
+}
+
+
+.submit_button{
+    background-color: midnightblue;
+    color: white;
+    font-size: 2vw;
+    border-radius: 100px;
+    padding-right: 7.5%;
+    padding-left: 7.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border: solid 2px white;
+    box-shadow: rgba(218, 31, 239, 0.59) 0px 0px 22px 4px;
+    transition: background-color 0.5s ease;
+}
+
+.submit_button:hover {
+    background-color: darkmagenta;
+}
