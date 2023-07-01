@@ -40,7 +40,7 @@ const CreateAccount = () => {
         }
 
         // Send a POST request to your Express.js server
-        const response = await fetch('http://localhost:9000/create_account', {
+        const response = await fetch('http://localhost:9000/create_player_account', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -58,9 +58,9 @@ const CreateAccount = () => {
 
     return (
         <div style={{backgroundImage:"linear-gradient(to top left,black,darkblue)",paddingTop:"5%"}}>
-            <h1 style={{fontSize:"4vw"}}>Create Account</h1>
+            <h1 style={{fontSize:"4vw", textAlign:"center",color:"white"}}>Create Account</h1>
             <form onSubmit={handleSubmit}>
-                <ul className="createAccountList" style={{listStyleType:"none", marginTop:"5%",paddingRight:"20%", paddingLeft: "20%",paddingBottom:"5%"}}>
+                <ul className="createAccountList" style={{listStyleType:"none",textAlign:"center", marginTop:"5%",paddingRight:"20%", paddingLeft: "20%",paddingBottom:"5%"}}>
                     <li style={{position: "relative"}}>
                         <InputTextField name="firstName" onChange={handleChange} type="text" label="First Name"></InputTextField>
                     </li>
@@ -83,7 +83,7 @@ const CreateAccount = () => {
                         <InputTextField name="retypePassword" onChange={handleChange} type="password" label="Retype password"></InputTextField>
                     </li>
                     <li style={{marginTop:"10%"}}>
-                        <label style={{fontSize:"25px", paddingRight:"5%"}} htmlFor="position_selector">Which gender do you identify yourself as:</label>
+                        <label style={{fontSize:"25px", paddingRight:"5%", color:"white"}} htmlFor="position_selector">Which gender do you identify yourself as:</label>
                         <select style={{paddingRight: "10px", paddingLeft:"10px",paddingTop:"5px",paddingBottom:"5px",background:"#edf2ff",border:"none",
                             borderRadius:"20px"}} name="gender" className="form_selector" onChange={handleChange}>
                             <option value="Male">Male</option>

@@ -1,3 +1,4 @@
+const calculator = require('./calculator.js');
 const express = require('express');
 const bodyParser = require('body-parser'); // new line
 const app = express();
@@ -5,6 +6,8 @@ const bcrypt = require('bcrypt');
 const cors = require("cors");
 const mysql = require('mysql');
 const fs = require('fs');
+const session = require('express-session');
+
 
 
 app.use(cors());
@@ -38,8 +41,18 @@ setInterval(() => {
 }, 5000); // ping the server every 5 seconds
 
 
-app.post('/create_account', (req, res) => {
-    //const { firstName, lastName, email, userName, password, retypePassword, position } = req.body;
+//session
+
+app.use(
+    session({
+        secret: 'your secret',
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
+
+app.post('/create_player_account', (req, res) => {
     const firstName=req.body.firstName;
     const lastName=req.body.lastName;
     const email=req.body.email;
@@ -48,9 +61,8 @@ app.post('/create_account', (req, res) => {
     const password=req.body.password;
     const retypePassword=req.body.retypePassword;
     const gender=req.body.gender;
-    const age = calculateAge(birthday);
-
-
+    const age = calculator.calculateAge(birthday);
+    const type='Player';
     //console.log(req.body);
 
     // Here you can perform your validation logic
@@ -66,8 +78,8 @@ app.post('/create_account', (req, res) => {
     // If validation passes, you can store the user data into a database
 
     db.query(
-        'INSERT INTO USER (Email, First_Name, Last_Name, Birthdate, Age, Gender, Username, Password_Hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [email, firstName, lastName, birthday, age, gender, userName, hashedPassword],
+        'INSERT INTO USER (Email, First_Name, Last_Name, Birthdate, Age, Gender, Username, Password_Hash, Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [email, firstName, lastName, birthday, age, gender, userName, hashedPassword, type],
         (err, result) => {
             if (err) {
                 console.error('Error inserting new user', err);
@@ -75,10 +87,23 @@ app.post('/create_account', (req, res) => {
                 return;
             }
 
-            res.status(200).send('Account created successfully!');
+            const id = result.insertId;
+
+            db.query(
+                'INSERT INTO PLAYER(UserID) VALUES(?)',
+                [id],
+                (err,result)=>{
+                    if(err){
+                        console.error('error inserting new player',err);
+                        res.status(500).send('Server error');
+                        return;
+                    }
+
+                    res.status(200).send({ message: 'Account created successfully!', userId: id });
+                }
+            );
         }
     );
-
 });
 
 
@@ -86,8 +111,6 @@ app.post('/create_account', (req, res) => {
 app.post('/login', (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
-
-    
 
     // Query the database for a user with the provided username
     const query = 'SELECT * FROM USER WHERE Username = ?';
@@ -115,8 +138,12 @@ app.post('/login', (req, res) => {
             }
 
             if (result) {
-                // If the passwords match, send a successful response
-                res.status(200).send('Login successful!');
+                // If the passwords match, create a session and store userID and role in it
+                req.session.userId = user.ID;
+                req.session.role = user.Role;
+
+                // Send a successful response
+                res.status(200).json({ message: 'Login successful!', userId: user.ID, role: user.Role });
             } else {
                 // If the passwords do not match, send an error response
                 res.status(401).send('Invalid username or password');
@@ -126,18 +153,7 @@ app.post('/login', (req, res) => {
 });
 
 
-function calculateAge(birthdate) {
-    const dob = new Date(birthdate);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    const m = today.getMonth() - dob.getMonth();
 
-    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
-        age--;
-    }
-
-    return age;
-}
 
 
 

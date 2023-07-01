@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import { useUserSession } from './UserSession';
 import InputTextField from './inputTextField';
 import LinkButton from './linkButton';
 
 const LoginForm = () => {
+    const { setUserSession } = useUserSession();
+
     const [formData, setFormData] = useState({
         userName:'',
         password: ''
@@ -14,10 +17,10 @@ const LoginForm = () => {
             [e.target.name]: e.target.value
         });
     }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Verify all fields have data
         for (let property in formData) {
             if (formData[property] === '') {
                 alert('Please fill all the fields.');
@@ -25,7 +28,6 @@ const LoginForm = () => {
             }
         }
 
-        // Send a POST request to your Express.js server
         const response = await fetch('http://localhost:9000/login', {
             method: 'POST',
             headers: {
@@ -35,11 +37,14 @@ const LoginForm = () => {
         });
 
         if (response.ok) {
+            const user = await response.json();
+            setUserSession(user);
             alert('Login successful!');
         } else {
             alert('An error occurred while login. Please retry');
         }
     }
+
 
     return (
         <div>
@@ -47,8 +52,8 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit} style={{background: "rgba( 255, 255, 255, 0.1 )", boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
                     backdropFilter: "blur( 5px )", borderRadius: "10px", border: "1px solid rgba( 255, 255, 255, 0.18 )",
                     marginTop:"10%"}}>
-                    <h1 style={{textAlign:"center", marginTop:"5%"}}>Login Here</h1>
-                    <ul style={{listStyleType:"none", paddingBottom:"5%", paddingLeft:"5%", paddingRight:"5%"}}>
+                    <h1 style={{textAlign:"center", color:"white", marginTop:"5%"}}>Login Here</h1>
+                    <ul style={{listStyleType:"none", textAlign:"center", paddingBottom:"5%", paddingLeft:"5%", paddingRight:"5%"}}>
                         <li style={{position: "relative", marginTop:"10%"}}>
                             <InputTextField name="userName" onChange={handleChange} type="text" label="Username"></InputTextField>
                         </li>
@@ -61,7 +66,7 @@ const LoginForm = () => {
                     </ul>
                 </form>
                 <div style={{marginTop:"10%"}}>
-                    <p style={{fontSize:"25px"}}>Don't have an account? Click here: <LinkButton style={{marginLeft:"5%"}} link="/createAccount" buttonText="Create account"/></p>
+                    <p style={{fontSize:"25px", color:"white"}}>Don't have an account? Click here: <LinkButton style={{marginLeft:"5%"}} link="/createAccount" buttonText="Create account"/></p>
                 </div>
             </div>
         </div>
