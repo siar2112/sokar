@@ -4,7 +4,7 @@ import InputTextField from './inputTextField';
 import LinkButton from './linkButton';
 
 const LoginForm = () => {
-    const { setUserSession } = useUserSession();
+    const { userSession, setUserSession } = useUserSession();
 
     const [formData, setFormData] = useState({
         userName:'',
@@ -20,6 +20,11 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if(userSession !== null) {
+            alert("You are already logged in.");
+            return;
+        }
 
         for (let property in formData) {
             if (formData[property] === '') {
@@ -38,8 +43,9 @@ const LoginForm = () => {
 
         if (response.ok) {
             const user = await response.json();
+            localStorage.setItem('userSession', JSON.stringify(user));
             setUserSession(user);
-            alert('Login successful!');
+            alert(`Login successful! Welcome, ${user.username}. You are logged in as a ${user.role}.`);
         } else {
             alert('An error occurred while login. Please retry');
         }

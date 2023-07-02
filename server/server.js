@@ -10,7 +10,10 @@ const session = require('express-session');
 
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',  // replace with the domain of your client
+    credentials: true
+}));
 app.use(express.json()); // for parsing application/json
 app.use(bodyParser.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -140,15 +143,27 @@ app.post('/login', (req, res) => {
             if (result) {
                 // If the passwords match, create a session and store userID and role in it
                 req.session.userId = user.ID;
-                req.session.role = user.Role;
+                req.session.username=user.Username;
+                req.session.role = user.Type;
 
                 // Send a successful response
-                res.status(200).json({ message: 'Login successful!', userId: user.ID, role: user.Role });
+                res.status(200).json({ message: 'Login successful!',
+                    userId: user.ID, role: user.Type, username:user.Username });
             } else {
                 // If the passwords do not match, send an error response
                 res.status(401).send('Invalid username or password');
             }
         });
+    });
+});
+
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if(err) {
+            return console.log(err);
+        }
+        res.status(200).send('Session destroyed successfully');
     });
 });
 
