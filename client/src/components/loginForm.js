@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import { useUserSession } from './UserSession';
 import InputTextField from './inputTextField';
 import LinkButton from './linkButton';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const { userSession, setUserSession } = useUserSession();
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         userName:'',
         password: ''
@@ -46,6 +47,7 @@ const LoginForm = () => {
             localStorage.setItem('userSession', JSON.stringify(user));
             setUserSession(user);
             alert(`Login successful! Welcome, ${user.username}. You are logged in as a ${user.role}.`);
+            navigate("/");
         } else {
             alert('An error occurred while login. Please retry');
         }

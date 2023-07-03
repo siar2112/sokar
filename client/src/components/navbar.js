@@ -2,11 +2,12 @@ import React from 'react';
 import { useUserSession } from './UserSession';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Logo from './logo.js';
+import {useNavigate} from 'react-router-dom';
 
 
 const Navigation = () => {
     const { userSession, setUserSession } = useUserSession();
-
+    const navigate = useNavigate();
     const handleLogout = async () => {
         const response = await fetch('http://localhost:9000/logout');
 
@@ -14,6 +15,8 @@ const Navigation = () => {
             localStorage.removeItem('userSession');
             // Remove the user session
             setUserSession(null);
+            alert('Logout successful');
+            navigate("/");
         } else {
             console.log('Logout failed');
         }
@@ -30,7 +33,7 @@ const Navigation = () => {
                     <Nav.Link style={{ marginLeft: "40px" }} href="/">Home</Nav.Link>
                     <Nav.Link style={{ marginLeft: "40px" }} href="/about">About</Nav.Link>
                     <Nav.Link style={{ marginLeft: "40px" }} href="/events">Events</Nav.Link>
-                    <Nav.Link style={{ marginLeft: "40px" }} href="/teams">Profile</Nav.Link>
+                    <Nav.Link style={{ marginLeft: "40px" }} href="/profile">Profile</Nav.Link>
                     <NavDropdown style={{ marginLeft: "40px" }} title="Stats" id="basic-nav-dropdown">
                         <NavDropdown.Item style={{ backgroundColor: "purple"}}  href="/teams">Players</NavDropdown.Item>
                         <NavDropdown.Item style={{ backgroundColor: "purple"}} href="/teams">Teams</NavDropdown.Item>

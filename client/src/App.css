@@ -4,7 +4,7 @@ html{
 
 body {
   background-image: linear-gradient(to bottom right,blue,purple);
-  color: white;
+  color: white !important;
   text-align: center;
   background-repeat: no-repeat;
   padding-bottom:0;

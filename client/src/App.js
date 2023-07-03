@@ -5,6 +5,7 @@ import Carousel from './components/carousel.js';
 import CreateAccount from './components/createAccount.js';
 import LoginForm from "./components/loginForm";
 import AboutPage from "./components/aboutPage";
+import UserProfile from "./components/UserProfile";
 import './App.css';
 import React from "react";
 
@@ -16,6 +17,7 @@ function App(){
                 <Routes>
                     <Route path="/" element={<Carousel/>} />
                     <Route path="/createAccount" element={<CreateAccount/>} />
+                    <Route path="/profile" element={<UserProfile/>} />
                     <Route path="/login" element={<LoginForm/>} />
                     <Route path="/about" element={<AboutPage/>} />
                 </Routes>
