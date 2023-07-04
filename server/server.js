@@ -177,10 +177,11 @@ app.get('/logout', (req, res) => {
 
 app.get('/verify-session', (req, res) => {
     // Check if user session exists
-    console.log(req.session);
     if (req.session.userId) {
         // Query the database for user details
-        const query = 'SELECT * FROM USER WHERE ID = ?';
+        const query = 'SELECT First_Name, Last_Name, Age,Gender, Username, Goals,\n' +
+            '  Clean_Sheet, Win, Lose, Draw, Total_Game, Yellow_Cards, Red_Cards,Def_Rating, Offensive_Rating,P_VALUE\n' +
+            '  FROM USER u JOIN PLAYER p ON u.ID = p.UserID WHERE u.ID = ?';
         db.query(query, req.session.userId, (error, results) => {
             if (error) {
                 console.error('Could not execute query', error);
@@ -191,9 +192,22 @@ app.get('/verify-session', (req, res) => {
             if (results.length > 0) {
                 const user = results[0];
                 res.status(200).json({
-                    userId: user.ID,
+                    firstName: user.First_Name,
+                    lastName: user.Last_Name,
+                    age: user.Age,
+                    gender: user.Gender,
                     username: user.Username,
-                    role: user.Type
+                    goals: user.Goals,
+                    cleanSheet: user.Clean_Sheet,
+                    win: user.Win,
+                    lose: user.Lose,
+                    draw: user.Draw,
+                    totalGame: user.Total_Game,
+                    yellowCards: user.Yellow_Cards,
+                    redCards: user.Red_Cards,
+                    defRating: user.Def_Rating,
+                    offensiveRating: user.Offensive_Rating,
+                    pValue: user.P_VALUE
                 });
             } else {
                 // If user does not exist, return error
