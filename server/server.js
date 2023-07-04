@@ -39,6 +39,7 @@ db.connect((err) => {
     console.log('Connection established successfully.');
 });
 
+
 setInterval(() => {
     db.query('SELECT 1');
 }, 5000); // ping the server every 5 seconds
@@ -51,6 +52,10 @@ app.use(
         secret: 'your secret',
         resave: false,
         saveUninitialized: true,
+        cookie: {
+            maxAge: 24 * 60 * 60 * 1000, // sets cookie to expire in 24 hours
+            httpOnly: true // cookie cannot be accessed through client side script
+        }
     })
 );
 
@@ -147,6 +152,7 @@ app.post('/login', (req, res) => {
                 req.session.role = user.Type;
 
                 // Send a successful response
+                console.log(req.session);
                 res.status(200).json({ message: 'Login successful!',
                     userId: user.ID, role: user.Type, username:user.Username });
             } else {
@@ -166,6 +172,42 @@ app.get('/logout', (req, res) => {
         res.status(200).send('Session destroyed successfully');
     });
 });
+
+
+
+app.get('/verify-session', (req, res) => {
+    // Check if user session exists
+    console.log(req.session);
+    if (req.session.userId) {
+        // Query the database for user details
+        const query = 'SELECT * FROM USER WHERE ID = ?';
+        db.query(query, req.session.userId, (error, results) => {
+            if (error) {
+                console.error('Could not execute query', error);
+                res.status(500).send('Server error');
+                return;
+            }
+            // If user exists, return user details
+            if (results.length > 0) {
+                const user = results[0];
+                res.status(200).json({
+                    userId: user.ID,
+                    username: user.Username,
+                    role: user.Type
+                });
+            } else {
+                // If user does not exist, return error
+                res.status(401).send('Session exists but user not found');
+            }
+        });
+    } else {
+        // If session does not exist, return error
+        res.status(401).send('Session does not exist');
+    }
+});
+
+
+
 
 
 
