@@ -1,0 +1,18 @@
+.EventBoxContainer{
+    border-radius: 16px;
+    border: 1px solid purple;
+    background-image: linear-gradient(to bottom right,blue,black);
+    text-align: center;
+}
+
+.EventBoxContainer a{
+    color: skyblue !important;
+    font-size: 25px;
+    text-decoration: underline !important;
+}
+
+.EventBoxContainer a:hover{
+    color: white !important;
+
+    cursor: pointer;
+}

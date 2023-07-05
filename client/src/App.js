@@ -8,6 +8,7 @@ import AboutPage from "./components/aboutPage";
 import UserProfile from "./components/UserProfile";
 import './App.css';
 import React from "react";
+import FindEventsPage from "./components/FindEventsPage";
 
 function App(){
     return (
@@ -17,6 +18,7 @@ function App(){
                 <Routes>
                     <Route path="/" element={<Carousel/>} />
                     <Route path="/createAccount" element={<CreateAccount/>} />
+                    <Route path="/eventsPage" element={<FindEventsPage/>}/>
                     <Route path="/profile" element={<UserProfile/>} />
                     <Route path="/login" element={<LoginForm/>} />
                     <Route path="/about" element={<AboutPage/>} />

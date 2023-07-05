@@ -32,7 +32,7 @@ const Navigation = () => {
                 <Nav className="ml-auto" style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
                     <Nav.Link style={{ marginLeft: "40px" }} href="/">Home</Nav.Link>
                     <Nav.Link style={{ marginLeft: "40px" }} href="/about">About</Nav.Link>
-                    <Nav.Link style={{ marginLeft: "40px" }} href="/events">Events</Nav.Link>
+                    <Nav.Link style={{ marginLeft: "40px" }} href="/eventsPage">Events</Nav.Link>
                     <Nav.Link style={{ marginLeft: "40px" }} href="/profile">Profile</Nav.Link>
                     <NavDropdown style={{ marginLeft: "40px" }} title="Stats" id="basic-nav-dropdown">
                         <NavDropdown.Item style={{ backgroundColor: "purple"}}  href="/teams">Players</NavDropdown.Item>
