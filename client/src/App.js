@@ -6,6 +6,7 @@ import CreateAccount from './components/createAccount.js';
 import LoginForm from "./components/loginForm";
 import AboutPage from "./components/aboutPage";
 import UserProfile from "./components/UserProfile";
+import CompetitionInfoPage from "./components/CompetitionInfoPage";
 import './App.css';
 import React from "react";
 import FindEventsPage from "./components/FindEventsPage";
@@ -22,6 +23,7 @@ function App(){
                     <Route path="/profile" element={<UserProfile/>} />
                     <Route path="/login" element={<LoginForm/>} />
                     <Route path="/about" element={<AboutPage/>} />
+                    <Route path="/competition/:id" component={CompetitionInfoPage} />
                 </Routes>
             </Router>
         </UserSessionProvider>

@@ -3,6 +3,7 @@
     border: 1px solid purple;
     background-image: linear-gradient(to bottom right,blue,black);
     text-align: center;
+    padding-bottom: 2%;
 }
 
 .EventBoxContainer a{

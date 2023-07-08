@@ -223,7 +223,6 @@ app.get('/verify-session', (req, res) => {
 
 app.get('/getAllEvents', (req, res) => {
     const query = 'SELECT * FROM COMPETITION';
-
     db.query(query, (error, results) => {
         if (error) {
             console.error('Could not execute query', error);
@@ -238,6 +237,11 @@ app.get('/getAllEvents', (req, res) => {
         }
     });
 });
+
+
+app.post('/getAllCompetitionTeams',), (req, res) => {
+
+};
 
 
 

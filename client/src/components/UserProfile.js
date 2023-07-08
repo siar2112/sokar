@@ -102,44 +102,44 @@ const UserProfile= () =>{
                 <table style={{marginTop:"5%", borderCollapse: "collapse", borderSpacing: "0",
                     width: "100%", color: "white",textAlign:"left",fontSize:"24px",lineHeight:"2"}}>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>GOALS</td>
-                        <td style={{padding: "10px 0"}}>{data.goals}</td>
+                        <td style={{padding: "10px 10px"}}>GOALS</td>
+                        <td style={{padding: "10px 10px"}}>{data.goals}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Clean sheets</td>
-                        <td style={{padding: "10px 0"}}>{data.cleanSheet}</td>
+                        <td style={{padding: "10px 10px"}}>Clean sheets</td>
+                        <td style={{padding: "10px 10px"}}>{data.cleanSheet}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Wins</td>
-                        <td style={{padding: "10px 0"}}>{data.win}</td>
+                        <td style={{padding: "10px 10px"}}>Wins</td>
+                        <td style={{padding: "10px 10px"}}>{data.win}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Lost</td>
-                        <td style={{padding: "10px 0"}}>{data.lose}</td>
+                        <td style={{padding: "10px 10px"}}>Lost</td>
+                        <td style={{padding: "10px 10px"}}>{data.lose}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Draw</td>
-                        <td style={{padding: "10px 0"}}>{data.draw}</td>
+                        <td style={{padding: "10px 10px"}}>Draw</td>
+                        <td style={{padding: "10px 10px"}}>{data.draw}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Total Game</td>
-                        <td style={{padding: "10px 0"}}>{data.totalGame}</td>
+                        <td style={{padding: "10px 10px"}}>Total Game</td>
+                        <td style={{padding: "10px 10px"}}>{data.totalGame}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Yellow Cards</td>
-                        <td style={{padding: "10px 0"}}>{data.yellowCards}</td>
+                        <td style={{padding: "10px 10px"}}>Yellow Cards</td>
+                        <td style={{padding: "10px 10px"}}>{data.yellowCards}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Red Cards</td>
-                        <td style={{padding: "10px 0"}}>{data.redCards}</td>
+                        <td style={{padding: "10px 10px"}}>Red Cards</td>
+                        <td style={{padding: "10px 10px"}}>{data.redCards}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Defensive rating</td>
-                        <td style={{padding: "10px 0"}}>{data.defRating}</td>
+                        <td style={{padding: "10px 10px"}}>Defensive rating</td>
+                        <td style={{padding: "10px 10px"}}>{data.defRating}</td>
                     </tr>
                     <tr style={{borderBottom: "1px solid silver"}}>
-                        <td style={{padding: "10px 0"}}>Offensive rating</td>
-                        <td style={{padding: "10px 0"}}>{data.offensiveRating}</td>
+                        <td style={{padding: "10px 10px"}}>Offensive rating</td>
+                        <td style={{padding: "10px 10px"}}>{data.offensiveRating}</td>
                     </tr>
                 </table>
             </div>
