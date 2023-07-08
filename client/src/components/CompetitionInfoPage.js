@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import EventBoxInfo from './EventBox';
+import { useParams } from 'react-router-dom';
 
-const CompetitionInfoPage = ({match}) => {
+const CompetitionInfoPage = () => {
     const [competitionTeams, setCompetitionTeams] = useState([]); // State to store all teams of a specific event
-    const { params: { id } } = match;
+    let { id } = useParams();
 
     useEffect(() => {
         getAllCompetitionTeams();
@@ -16,7 +16,7 @@ const CompetitionInfoPage = ({match}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(id),
+                body: JSON.stringify({id: id}), // corrected here,
                 credentials: 'include'
             });
             if (response.ok) {
@@ -30,9 +30,28 @@ const CompetitionInfoPage = ({match}) => {
         }
     };
 
+    // Helper function to group teams by category
+    const groupByCategory = (teams) => {
+        return teams.reduce((groupedTeams, team) => {
+            (groupedTeams[team.Category] = groupedTeams[team.Category] || []).push(team);
+            return groupedTeams;
+        }, {});
+    };
+
+    const groupedTeams = groupByCategory(competitionTeams);
+
     return (
         <div>
-            {/* Show competition details... */}
+            {Object.keys(groupedTeams).map(category => (
+                <div key={category}>
+                    <h2>Category: {category}</h2>
+                    {groupedTeams[category].map(team => (
+                        <div key={team.TeamID}>
+                            <p>{team.Name}</p>
+                        </div>
+                    ))}
+                </div>
+            ))}
         </div>
     );
 };

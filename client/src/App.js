@@ -23,7 +23,7 @@ function App(){
                     <Route path="/profile" element={<UserProfile/>} />
                     <Route path="/login" element={<LoginForm/>} />
                     <Route path="/about" element={<AboutPage/>} />
-                    <Route path="/competition/:id" component={CompetitionInfoPage} />
+                    <Route path="/competition/:id" element={<CompetitionInfoPage/>} />
                 </Routes>
             </Router>
         </UserSessionProvider>

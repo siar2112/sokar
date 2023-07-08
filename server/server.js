@@ -239,9 +239,26 @@ app.get('/getAllEvents', (req, res) => {
 });
 
 
-app.post('/getAllCompetitionTeams',), (req, res) => {
+app.post('/getAllCompetitionTeams', (req, res) => {
+    const CompetitionID = req.body.id;
+    console.log(CompetitionID);
+    const query = 'SELECT * FROM TEAM WHERE CompetitionID = ?';
 
-};
+    db.query(query, [CompetitionID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+            console.log(results);
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
+
 
 
 
