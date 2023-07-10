@@ -1,0 +1,7 @@
+td,th{
+    padding: 10px 10px;
+}
+
+.Link:hover{
+    color:skyblue!important;
+}

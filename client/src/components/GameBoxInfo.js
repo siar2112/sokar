@@ -1,26 +1,49 @@
 import React from 'react';
 import './stylesFiles/Gamebox.css';
+import { Link } from 'react-router-dom';
 
 
-const GameBoxInfo= ({competitionName, team1, team2, team1_score,
-                        team2_score, team1_percentage, team2_percentage,
-                        time, location, category, importance, duration, link, style}) =>{
 
+
+const GameBoxInfo= ({competitionName,
+                        team1,
+                        team2,
+                        team1_score,
+                        team2_score,
+                        team1_percentage,
+                        team2_percentage,
+                        date,
+                        location,
+                        category,
+                        importance,
+                        duration,
+                        gameID,
+                        field,
+                        type,
+                        style}) =>{
+
+    const gameDate = new Date(date);
+    const formattedDate = gameDate.toLocaleDateString();
+    const startTime = gameDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     return(
         <div className="GameBoxContainer" style={style}>
-            <a href={link}>
-                {competitionName}:
-                <br/>
-                <p1>{team1} vs {team2}</p1>
-            </a>
+           <Link to={`/game/${gameID}`}>
+               {competitionName}
+               <br/>
+               <p1>{team1} vs {team2}</p1>
+           </Link>
+            <br/>
             <br/>
             <p2> Score: {team1_score} - {team2_score}</p2>
             <br/>Win percentage: {team1_percentage}% - {team2_percentage}%
             <br/>Category: {category}
-            <br/>Start time: {time}
             <br/>Location: {location}
-            <br/> Type:{importance}
+            <br/>Field: {field}
+            <br/> Importance: {importance}
+            <br/> Type: {type}
+            <br/> Date: {formattedDate}
+            <br/>Start time: {startTime}
             <br/> Duration: {duration} min
         </div>
     );

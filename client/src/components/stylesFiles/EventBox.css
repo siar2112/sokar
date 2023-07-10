@@ -1,5 +1,5 @@
 .EventBoxContainer{
-    border-radius: 16px;
+    border-radius: 5%;
     border: 1px solid purple;
     background-image: linear-gradient(to bottom right,blue,black);
     text-align: center;
