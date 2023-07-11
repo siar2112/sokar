@@ -60,58 +60,46 @@ app.use(
 );
 
 
-app.post('/create_player_account', (req, res) => {
-    const firstName=req.body.firstName;
-    const lastName=req.body.lastName;
-    const email=req.body.email;
-    const birthday=req.body.birthday;
-    const userName=req.body.userName;
-    const password=req.body.password;
-    const retypePassword=req.body.retypePassword;
-    const gender=req.body.gender;
+app.post('/create_player_account', async (req, res) => {
+    const { firstName, lastName, email, birthday, userName, password, retypePassword, gender } = req.body;
     const age = calculator.calculateAge(birthday);
-    const type='Player';
-    //console.log(req.body);
+    const type = 'Player';
 
-    // Here you can perform your validation logic
+    // Perform validation here
+
     if (password !== retypePassword) {
-        res.status(400).send('Passwords do not match!');
-        return;
+        return res.status(400).send('Passwords do not match!');
     }
 
+    // Encrypt password
     const saltRounds = 10;
-    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    try {
+        // Check if email or username already exists
+        const existingUser = await db.query(
+            'SELECT * FROM USER WHERE Email = ? OR Username = ?',
+            [email, userName]
+        );
 
-    // If validation passes, you can store the user data into a database
-
-    db.query(
-        'INSERT INTO USER (Email, First_Name, Last_Name, Birthdate, Age, Gender, Username, Password_Hash, Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [email, firstName, lastName, birthday, age, gender, userName, hashedPassword, type],
-        (err, result) => {
-            if (err) {
-                console.error('Error inserting new user', err);
-                res.status(500).send('Server error');
-                return;
-            }
-
-            const id = result.insertId;
-
-            db.query(
-                'INSERT INTO PLAYER(UserID) VALUES(?)',
-                [id],
-                (err,result)=>{
-                    if(err){
-                        console.error('error inserting new player',err);
-                        res.status(500).send('Server error');
-                        return;
-                    }
-
-                    res.status(200).send({ message: 'Account created successfully!', userId: id });
-                }
-            );
+        if (existingUser.length > 0) {
+            return res.status(400).send('Email or username already exists!');
         }
-    );
+
+        const result = await db.query(
+            'INSERT INTO USER (Email, First_Name, Last_Name, Birthdate, Age, Gender, Username, Password_Hash, Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [email, firstName, lastName, birthday, age, gender, userName, hashedPassword, type]
+        );
+
+        const id = result.insertId;
+
+        await db.query('INSERT INTO PLAYER(UserID) VALUES(?)', [id]);
+
+        return res.status(200).send({ message: 'Account created successfully!', userId: id });
+    } catch (err) {
+        console.error('Error when creating user', err);
+        return res.status(500).send('Server error');
+    }
 });
 
 

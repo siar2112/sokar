@@ -112,7 +112,7 @@ const CompetitionInfoPage = () => {
                 ))}
             </ul>
             <div style={{marginTop:"5%",paddingLeft:"2.5%"}}>
-                <LinkButton link="/createAccount" buttonText="Click here for full schedule"/>
+                <LinkButton link={`/FullSchedule/${id}/${name}`} buttonText="Click here for full schedule"/>
             </div>
             <h1 style={{textAlign:"center", marginTop:"10%"}}>Standings</h1>
             <table style={{marginTop:"2.5%",width:"100%", fontSize:"25px"}}>

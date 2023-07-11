@@ -10,6 +10,7 @@ import CompetitionInfoPage from "./components/CompetitionInfoPage";
 import './App.css';
 import React from "react";
 import FindEventsPage from "./components/FindEventsPage";
+import FullSchedulePage from "./components/FullSchedulePage";
 
 function App(){
     return (
@@ -24,6 +25,7 @@ function App(){
                     <Route path="/login" element={<LoginForm/>} />
                     <Route path="/about" element={<AboutPage/>} />
                     <Route path="/competition/:id/:name" element={<CompetitionInfoPage/>} />
+                    <Route path="/FullSchedule/:id/:name" element={<FullSchedulePage/>} />
                 </Routes>
             </Router>
         </UserSessionProvider>
