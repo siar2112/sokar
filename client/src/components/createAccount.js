@@ -40,7 +40,7 @@ const CreateAccount = () => {
         }
 
         // Send a POST request to your Express.js server
-        const response = await fetch('http://localhost:9000/create_player_account', {
+        const response = await fetch('${process.env.REACT_APP_API_URL}/create_player_account', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

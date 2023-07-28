@@ -13,7 +13,7 @@ const FullSchedulePage = () => {
     useEffect(() => {
         const getAllCompetitionGames = async () => {
             try {
-                const response = await fetch('http://localhost:9000/getAllCompetitionGames', {
+                const response = await fetch('${process.env.REACT_APP_API_URL}/getAllCompetitionGames', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ const Navigation = () => {
     const { userSession, setUserSession } = useUserSession();
     const navigate = useNavigate();
     const handleLogout = async () => {
-        const response = await fetch('http://localhost:9000/logout');
+        const response = await fetch('${process.env.REACT_APP_API_URL}/logout');
 
         if (response.ok) {
             localStorage.removeItem('userSession');

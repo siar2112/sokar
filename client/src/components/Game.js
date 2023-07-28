@@ -15,7 +15,7 @@ const Game = () => {
 
     useEffect(() => {
         const getAllPlayers = async () => {
-            const response = await fetch('http://localhost:9000/getPlayersInGame', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/getPlayersInGame', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const Game = () => {
         };
 
         const getGameInfo = async () => {
-            const response = await fetch('http://localhost:9000/getGameInfo', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/getGameInfo', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ const UserProfile= () =>{
     useEffect(() => {
         const verifyUserSession = async () => {
             try {
-                const response = await fetch('http://localhost:9000/verify-session', {
+                const response = await fetch('${process.env.REACT_APP_API_URL}/verify-session', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const UserProfile= () =>{
 
         const getPlayerTeams= async()=>{
             try{
-                const response = await fetch('http://localhost:9000/getPlayerTeams', {
+                const response = await fetch('${process.env.REACT_APP_API_URL}/getPlayerTeams', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const UserProfile= () =>{
 
         const getPlayerGames= async()=>{
             try{
-                const response = await fetch('http://localhost:9000/getPlayerGames', {
+                const response = await fetch('${process.env.REACT_APP_API_URL}/getPlayerGames', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
