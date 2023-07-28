@@ -11,7 +11,7 @@ const FindEventsPage = () =>{
 
     const getAllEvents = async()=>{
         try {
-            const response = await fetch('${process.env.REACT_APP_API_URL}/getAllEvents', {
+            const response = await fetch('/getAllEvents', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

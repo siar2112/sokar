@@ -13,7 +13,7 @@ const TeamMemberPage = () => {
     useEffect(() => {
         const getAllTeamMembers = async () => {
             try {
-                const response = await fetch('${process.env.REACT_APP_API_URL}/getAllTeamMembers', {
+                const response = await fetch('/getAllTeamMembers', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const TeamMemberPage = () => {
 
         const getTeamGames = async () => {
             try {
-                const response = await fetch('${process.env.REACT_APP_API_URL}/getTeamGames', {
+                const response = await fetch('/getTeamGames', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const TeamMemberPage = () => {
 
         const getTeamInfo = async () => {
             try {
-                const response = await fetch('${process.env.REACT_APP_API_URL}/getTeamInfo', {
+                const response = await fetch('/getTeamInfo', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
