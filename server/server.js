@@ -343,6 +343,7 @@ app.post('/getAllCompetitionGames', (req, res) => {
         }
         if (results.length > 0) {
             //console.log(results);
+            console.log(results);
             res.status(200).json(results);
         } else {
             res.status(200).json([]);
