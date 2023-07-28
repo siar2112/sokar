@@ -292,7 +292,6 @@ app.get('/getPlayerGames', (req, res) => {
 
 
 app.get('/getAllEvents', (req, res) => {
-    const UserID = req.body.id;
     const query = 'SELECT * FROM COMPETITION';
     db.query(query, (error, results) => {
         if (error) {
