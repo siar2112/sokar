@@ -299,8 +299,7 @@ app.get('/getAllEvents', (req, res) => {
             return;
         }
         if (results.length > 0) {
-            const events = results;
-            res.status(200).json(events);
+            res.status(200).json(results);
         } else {
             res.status(200).json([]);
         }
