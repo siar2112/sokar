@@ -5,8 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "postinstall": "npm rebuild bcrypt --build-from-source"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
 
   "keywords": [],
