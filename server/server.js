@@ -2,7 +2,7 @@ const calculator = require('./calculator.js');
 const express = require('express');
 const bodyParser = require('body-parser'); // new line
 const app = express();
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const cors = require("cors");
 const mysql = require('mysql');
 const fs = require('fs');
@@ -90,7 +90,7 @@ app.post('/create_player_account', async (req, res) => {
 
     // Encrypt password
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcryptjs.hash(password, saltRounds);
 
     try {
         // Check if email or username already exists
@@ -146,7 +146,7 @@ app.post('/login', (req, res) => {
         const user = results[0];
 
         // Compare the hashed password in the database with the hash of the provided password
-        bcrypt.compare(password, user.Password_Hash, (err, result) => {
+        bcryptjs.compare(password, user.Password_Hash, (err, result) => {
             if (err) {
                 console.error('Error comparing passwords', err);
                 res.status(500).send('Server error');
