@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link  } from 'react-router-dom';
 import GameBoxInfo from "./GameBoxInfo";
 import './stylesFiles/CompetitionInfo.css';
 import LinkButton from "./linkButton";
@@ -135,7 +135,7 @@ const CompetitionInfoPage = () => {
                         <tbody>
                         {groupedTeams[category].map(team => (
                             <tr style={{borderBottom: "1px solid silver"}} key={team.TeamID}>
-                                <td style={{borderRight:"1px solid silver"}}>{team.Name}</td>
+                                <td style={{borderRight:"1px solid silver"}}><Link to={`/Team/${team.TeamID}`}>{team.Name}</Link></td>
                                 <td>{team.Team_Value}</td>
                                 <td>{team.Team_Wins}</td>
                                 <td>{team.Team_Lose}</td>

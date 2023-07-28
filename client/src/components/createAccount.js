@@ -78,7 +78,7 @@ const CreateAccount = () => {
                         <InputTextField name="birthday" onChange={handleChange} type="date" label="Birthday"></InputTextField>
                     </li>
                     <li style={{position: "relative"}}>
-                        <InputTextField name="password" onChange={handleChange} type="password" label="Create strong password"></InputTextField>
+                        <InputTextField name="password" onChange={handleChange} type="password" label="Create strong password (Please do not use a real one for this prototype)"></InputTextField>
                     </li>
                     <li style={{position: "relative"}}>
                         <InputTextField name="retypePassword" onChange={handleChange} type="password" label="Retype password"></InputTextField>

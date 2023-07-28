@@ -104,6 +104,9 @@ app.post('/create_player_account', async (req, res) => {
 
 
 
+
+
+
 app.post('/login', (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
@@ -140,7 +143,7 @@ app.post('/login', (req, res) => {
                 req.session.role = user.Type;
 
                 // Send a successful response
-                console.log(req.session);
+                //console.log(req.session);
                 res.status(200).json({ message: 'Login successful!',
                     userId: user.ID, role: user.Type, username:user.Username });
             } else {
@@ -209,7 +212,68 @@ app.get('/verify-session', (req, res) => {
 });
 
 
+app.get('/getPlayerTeams', (req, res) => {
+    // Check if user session exists
+    if (req.session.userId) {
+        // Query the database for user details
+        const query = 'SELECT * FROM Is_In JOIN TEAM ON Is_In.TeamID = TEAM.TeamID WHERE UserID = ? LIMIT 5';
+        db.query(query, req.session.userId, (error, results) => {
+            if (error) {
+                console.error('Could not execute query', error);
+                res.status(500).send('Server error');
+                return;
+            }
+            // If user exists, return user details
+            if (results.length > 0) {
+                const teams = results;
+                res.status(200).json(teams);
+
+            } else {
+                // If user does not exist, return error
+                res.status(401).send('Session exists but user not found');
+            }
+        });
+    } else {
+        // If session does not exist, return error
+        res.status(401).send('Session does not exist');
+    }
+});
+
+app.get('/getPlayerGames', (req, res) => {
+    // Check if user session exists
+    if (req.session.userId) {
+        // Query the database for user details
+        const query = 'SELECT * FROM PLAYS_P JOIN Games ON PLAYS_P.GameID = Games.GameID WHERE PLAYS_P.UserID = ? LIMIT 4';
+        db.query(query, req.session.userId, (error, results) => {
+            if (error) {
+                console.error('Could not execute query', error);
+                res.status(500).send('Server error');
+                return;
+            }
+            // If user exists, return user details
+            if (results.length > 0) {
+                const games = results;
+                res.status(200).json(games);
+
+            } else {
+                // If user does not exist, return error
+                res.status(401).send('Session exists but user not found');
+            }
+        });
+    } else {
+        // If session does not exist, return error
+        res.status(401).send('Session does not exist');
+    }
+});
+
+
+
+
+
+
+
 app.get('/getAllEvents', (req, res) => {
+    const UserID = req.body.id;
     const query = 'SELECT * FROM COMPETITION';
     db.query(query, (error, results) => {
         if (error) {
@@ -259,7 +323,7 @@ app.post('/getAllCompetitionGames', (req, res) => {
             return;
         }
         if (results.length > 0) {
-            console.log(results);
+            //console.log(results);
             res.status(200).json(results);
         } else {
             res.status(200).json([]);
@@ -269,7 +333,111 @@ app.post('/getAllCompetitionGames', (req, res) => {
 
 
 
+app.post('/getTeamInfo', (req, res) => {
+    const TeamID = req.body.teamID;
+    const query = 'SELECT * FROM TEAM WHERE TeamID = ?';
 
+
+    db.query(query, [TeamID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
+
+
+
+app.post('/getAllTeamMembers', (req, res) => {
+    const TeamID = req.body.teamID;
+    const query = `SELECT U.First_Name, U.Last_Name, I.* FROM USER U JOIN PLAYER P ON U.ID = P.UserID JOIN Is_In I ON P.UserID = I.UserID WHERE I.TeamID = ?`;
+    db.query(query, [TeamID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
+
+
+
+app.post('/getTeamGames', (req, res) => {
+    const TeamID = req.body.teamID;
+    const query = 'SELECT * FROM GAMES WHERE Team1_ID = ? OR Team2_ID = ?';
+
+    db.query(query, [TeamID, TeamID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
+
+
+
+app.post('/getPlayersInGame', (req, res) => {
+    const gameID = req.body.gameID;
+    const query = `
+        SELECT U.First_Name, U.Last_Name, I.TeamID, Pl.*
+        FROM USER U
+        JOIN PLAYER P ON U.ID = P.UserID
+        JOIN Is_In I ON P.UserID = I.UserID
+        JOIN PLAYS_P Pl ON P.UserID = Pl.UserID
+        WHERE Pl.GameID = ?;
+    `;
+
+    db.query(query, [gameID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
+
+
+app.post('/getGameInfo', (req, res) => {
+    const gameID = req.body.gameID;
+    const query = `SELECT * FROM GAMES WHERE GameID = ?`;
+
+    db.query(query, [gameID], (error, results) => {
+        if (error) {
+            console.error('Could not execute query', error);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.length > 0) {
+            //console.log(results);
+            res.status(200).json(results);
+        } else {
+            res.status(200).json([]);
+        }
+    });
+});
 
 
 

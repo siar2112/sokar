@@ -3,7 +3,7 @@ html{
 }
 
 body {
-  background-image: linear-gradient(to bottom right,blue,purple);
+  background-image: linear-gradient(to bottom right,purple, blue, purple);
   color: white !important;
   text-align: center;
   background-repeat: no-repeat;

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import UserBoxInfo from './UserBoxInfo.js';
 import GameBoxInfo from "./GameBoxInfo";
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useUserSession } from './UserSession';
 
 
@@ -10,6 +10,8 @@ const UserProfile= () =>{
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null); // State to store user data
+    const [teams,setTeams]=useState([]);
+    const [games,setGames]=useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,7 +45,59 @@ const UserProfile= () =>{
             }
         };
 
+        const getPlayerTeams= async()=>{
+            try{
+                const response = await fetch('http://localhost:9000/getPlayerTeams', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const teams = await response.json();
+                    setTeams(teams); // Store user data
+                } else if (response.status === 401) {
+                    throw new Error('Session verification failed');
+                } else {
+                    throw new Error('An unexpected error occurred');
+                }
+
+            }catch (error){
+                console.error(error);
+            }
+        }
+
+
+        const getPlayerGames= async()=>{
+            try{
+                const response = await fetch('http://localhost:9000/getPlayerGames', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const games = await response.json();
+                    setGames(games); // Store user data
+                } else if (response.status === 401) {
+                    throw new Error('Session verification failed');
+                } else {
+                    throw new Error('An unexpected error occurred');
+                }
+
+            }catch (error){
+                console.error(error);
+            }
+        }
+
+
         verifyUserSession();
+        getPlayerTeams();
+        getPlayerGames();
     }, [userSession, navigate]);
 
     if (isLoading) {
@@ -70,34 +124,45 @@ const UserProfile= () =>{
 
 
                 <h1 style={{marginTop:"10%"}}>Upcoming Games</h1>
-                <ul style={{listStyle:"none", marginTop:"5%",display:"flex"}}>
-                    <li style={{width:"25%"}}>
-                        <GameBoxInfo team1="Falcon" team2="Tigers" time="12:00:00" location="Montreal"
-                                     team1_score="1" team2_score="0" team1_percentage="30" team2_percentage="60" category="M" duration="60"
-                                     importance="Points" competitionName="Champions League">
-                        </GameBoxInfo>
-                    </li>
-                    <li style={{width:"25%"}}>
-                        <GameBoxInfo team1="Falcon" team2="Tigers" time="12:00:00" location="Montreal"
-                                     team1_score="1" team2_score="0" category="M" duration="60"
-                                     importance="Points" competitionName="Champions League">
-                        </GameBoxInfo>
-                    </li>
-                    <li style={{width:"25%"}}>
-                        <GameBoxInfo team1="Falcon" team2="Tigers" time="12:00:00" location="Montreal"
-                                     team1_score="1" team2_score="0" category="M" duration="60"
-                                     importance="Points" competitionName="Champions League">
-                        </GameBoxInfo>
-                    </li>
-                    <li style={{width:"25%"}}>
-                        <GameBoxInfo team1="Falcon" team2="Tigers" time="12:00:00" location="Montreal"
-                                     team1_score="1" team2_score="0" category="M" duration="60"
-                                     importance="Points" competitionName="Champions League">
-                        </GameBoxInfo>
-                    </li>
+                <ul style={{listStyleType:"none", display:"flex", flexWrap: "wrap", marginTop:"2.5%"}}>
+                    {games.map((games, index) => (
+                        <li style={{width:"22.5%", margin: "1%"}} key={index}>
+                            <GameBoxInfo team1={games.Team1_Name} team2={games.Team2_Name} competitionName={games.CompetitionName}
+                                         category={games.Category} team1_percentage={games.Team1_Win_percentage} team2_percentage={games.Team2_Win_percentage}
+                                         importance={games.Importance} location={games.Location} date={games.GameDate} duration={games.Duration}
+                                         gameID={games.GameID} team1_score={games.Team1_Goals} team2_score={games.Team2_Goals} type={games.Type} field={games.Field}/>
+                        </li>
+                    ))}
                 </ul>
 
                 <h1 style={{marginTop:"10%"}}>Teams in</h1>
+
+                <table style={{width:"100%", marginTop:"5%", fontSize:"25px",borderTop:"solid 1px purple"}}>
+                    <tr style={{borderBottom: "1px solid silver"}}>
+                        <th>Name</th>
+                        <th>$</th>
+                        <th>W</th>
+                        <th>L</th>
+                        <th>D</th>
+                        <th>GF</th>
+                        <th>GA</th>
+                        <th>+/-</th>
+                        <th>PTS</th>
+                    </tr>
+                    {teams.map((team, index) => (
+                        <tr style={{borderBottom: "1px solid silver"}} key={team.TeamID}>
+                            <td style={{borderRight:"1px solid silver"}}><Link to={`/Team/${team.TeamID}`}>{team.Name}</Link></td>
+                            <td>{team.Team_Value}</td>
+                            <td>{team.Team_Wins}</td>
+                            <td>{team.Team_Lose}</td>
+                            <td>{team.Team_Draw}</td>
+                            <td>{team.Team_Goals}</td>
+                            <td>{team.Team_Goals_Against}</td>
+                            <td>{team.Team_Goals - team.Team_Goals_Against}</td>
+                            <td>{team.Points}</td>
+                        </tr>
+                    ))}
+                </table>
 
                 <table style={{marginTop:"5%", borderCollapse: "collapse", borderSpacing: "0",
                     width: "100%", color: "white",textAlign:"left",fontSize:"24px",lineHeight:"2"}}>
