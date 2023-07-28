@@ -32,7 +32,17 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 //Database connection
 
-const db = process.env.db;
+const db = mysql.createConnection({
+    host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',
+    port: 4000,
+    user: '4Sp4wiDQ9J3rfja.root',
+    password: 'Xl6ClXFrfG9z51Mj',
+    database: 'soccer_R1',
+    ssl: {
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: true
+    }
+});
 
 db.connect((err) => {
     if(err) {
