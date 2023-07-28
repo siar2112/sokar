@@ -1,5 +1,6 @@
 import React from 'react';
 import LinkButton from './linkButton';
+import './stylesFiles/mobileView/mobileCarousel.css';
 
 
 
@@ -9,7 +10,7 @@ const Carousel= ()=>{
             <div className="carousel-inner">
                 <div className="carousel-item active">
                     <img style={{height:"700px"}} src="/joshua-hoehne-Rrcyop6jvDA-unsplash.jpg" className="d-block w-100" alt="Slide 1" />
-                    <div className="carousel-caption" style={{ position: 'absolute', width:"30%", top: '30%', right:'90%', textAlign:'justify'}}>
+                    <div className="carousel-caption mobileChange" style={{ position: 'absolute', width:"30%", top: '30%', right:'90%', textAlign:'justify'}}>
                         <p style={{fontSize:"25px"}}> SoccerUnite is the place to find soccer near you, bringing together
                             local players, teams, and fans in a vibrant, unified community. Discover local leagues,
                             tournaments, or even start your own career with SoccerUnite's easy-to-use platform.
@@ -19,7 +20,7 @@ const Carousel= ()=>{
                 </div>
                 <div className="carousel-item">
                     <img style={{height:"700px"}} src="/emilio-garcia-AWdCgDDedH0-unsplash.jpg" className="d-block w-100" alt="Slide 2" />
-                    <div className="carousel-caption" style={{ position: 'absolute', width:"30%", top: '20%', right:'90%', textAlign:'justify'}}>
+                    <div className="carousel-caption mobileChange" style={{ position: 'absolute', width:"30%", top: '20%', right:'90%', textAlign:'justify'}}>
                         <p style={{fontSize:"22px"}}> Always dreamed of being treated like a pro soccer star? SoccerUnite provides a detailed analysis of
                             your profile based on the results you display during the events on our
                             platform and ranks you among other local players.
@@ -27,7 +28,7 @@ const Carousel= ()=>{
                             to help improve your game and track your progress over time. Create your account now
                             and rise to the challenge; take the first step towards
                             your soccer dreams today with SoccerUnite!</p>
-                        <LinkButton style={{marginTop:"5%"}} link="/createAccount" buttonText="Start your journey"/>
+                        <LinkButton className="StartJourneyButt" style={{marginTop:"5%"}} link="/createAccount" buttonText="Start your journey"/>
                     </div>
                 </div>
                 <div className="carousel-item">

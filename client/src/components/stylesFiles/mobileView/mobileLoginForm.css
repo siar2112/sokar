@@ -1,0 +1,14 @@
+@media screen and (max-width:1000px) {
+    .formContainer{
+        padding-left:15% !important;
+        padding-right: 15% !important;
+        padding-bottom: 30% !important;
+    }
+    .formContainer form{
+        margin-top: 25% !important;
+    }
+
+    .loginText{
+        font-size: 18px !important;
+    }
+}

@@ -3,6 +3,7 @@ import { useUserSession } from './UserSession';
 import InputTextField from './inputTextField';
 import LinkButton from './linkButton';
 import { useNavigate } from 'react-router-dom';
+import './stylesFiles/mobileView/mobileLoginForm.css';
 
 const LoginForm = () => {
     const { userSession, setUserSession } = useUserSession();
@@ -57,7 +58,7 @@ const LoginForm = () => {
 
     return (
         <div>
-            <div style={{paddingLeft:"25%",paddingRight:"25%",paddingBottom:"5%",}}>
+            <div className="formContainer" style={{paddingLeft:"25%",paddingRight:"25%",paddingBottom:"5%",}}>
                 <form onSubmit={handleSubmit} style={{background: "rgba( 255, 255, 255, 0.1 )", boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
                     backdropFilter: "blur( 5px )", borderRadius: "10px", border: "1px solid rgba( 255, 255, 255, 0.18 )",
                     marginTop:"10%"}}>
@@ -75,7 +76,7 @@ const LoginForm = () => {
                     </ul>
                 </form>
                 <div style={{marginTop:"10%"}}>
-                    <p style={{fontSize:"25px", color:"white"}}>Don't have an account? Click here: <LinkButton style={{marginLeft:"5%"}} link="/createAccount" buttonText="Create account"/></p>
+                    <p className="loginText" style={{fontSize:"25px", color:"white"}}>Don't have an account? <br/><br/><LinkButton style={{marginTop:"5%"}} link="/createAccount" buttonText="Create account"/></p>
                 </div>
             </div>
         </div>

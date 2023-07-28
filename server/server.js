@@ -8,6 +8,18 @@ const mysql = require('mysql');
 const fs = require('fs');
 const session = require('express-session');
 
+const path = require('path');
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+
+    // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
+
 
 
 app.use(cors({
@@ -58,6 +70,11 @@ app.use(
         }
     })
 );
+
+app.listen(9000, () => {
+    console.log('Server is listening on port 9000');
+});
+
 
 
 app.post('/create_player_account', async (req, res) => {
@@ -441,6 +458,3 @@ app.post('/getGameInfo', (req, res) => {
 
 
 
-app.listen(9000, () => {
-    console.log('Server is listening on port 9000');
-});

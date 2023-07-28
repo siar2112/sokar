@@ -1,0 +1,14 @@
+
+
+@media screen and (max-width:1000px) {
+    .carousel-caption{
+        right: 0;
+        font-size: 18px!important;
+    }
+    .mobileChange{
+        text-align: left !important;
+        top:10% !important;
+        width: 80% !important;
+        right: 0;
+    }
+}
