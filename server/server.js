@@ -271,8 +271,7 @@ app.get('/getPlayerGames', (req, res) => {
             }
             // If user exists, return user details
             if (results.length > 0) {
-                const games = results;
-                res.status(200).json(games);
+                res.status(200).json(results);
 
             } else {
                 // If user does not exist, return error
