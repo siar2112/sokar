@@ -72,8 +72,9 @@ app.use(
     })
 );
 
-app.listen(9000, () => {
-    console.log('Server is listening on port 9000');
+const PORT = process.env.PORT || 3000; // Use the port from the environment variables, or 3000 if there's nothing there.
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 
