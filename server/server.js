@@ -292,6 +292,7 @@ app.get('/getPlayerGames', (req, res) => {
 
 app.get('/getAllEvents', (req, res) => {
     const query = 'SELECT * FROM COMPETITION';
+    console.log("YESSSSSSS");
     db.query(query, (error, results) => {
         if (error) {
             console.error('Could not execute query', error);
