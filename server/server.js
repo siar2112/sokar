@@ -92,12 +92,11 @@ app.post('/create_player_account', async (req, res) => {
 
     try {
         // Check if email or username already exists
-        const users = await db.query(
+        const rows = await db.query(
             'SELECT * FROM USER WHERE Email = ? OR Username = ?',
             [req.body.email, req.body.userName]
         );
-
-        const [rows]=users;
+        console.log(rows);
 
         if (rows.length > 0) {
             return res.status(400).send('Email or username already exists!');
