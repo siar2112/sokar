@@ -92,10 +92,12 @@ app.post('/create_player_account', async (req, res) => {
 
     try {
         // Check if email or username already exists
-        const [rows] = await db.query(
+        const users = await db.query(
             'SELECT * FROM USER WHERE Email = ? OR Username = ?',
             [req.body.email, req.body.userName]
         );
+
+        const [rows]=users;
 
         if (rows.length > 0) {
             return res.status(400).send('Email or username already exists!');
@@ -106,7 +108,13 @@ app.post('/create_player_account', async (req, res) => {
             [email, firstName, lastName, birthday, age, gender, userName, hashedPassword, type]
         );
 
-        const id = result.insertId;
+        const theUser = await db.query(
+            'SELECT * FROM USER WHERE Email = ? OR Username = ?',
+            [email, userName]
+        );
+
+        const id = theUser[0].ID;
+
 
         await db.query('INSERT INTO PLAYER(UserID) VALUES(?)', [id]);
 
