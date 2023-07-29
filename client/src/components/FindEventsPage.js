@@ -18,8 +18,10 @@ const FindEventsPage = () =>{
                 },
                 credentials: 'include'
             });
+            const text = await response.text();
+            console.log(text);
             if (response.ok) {
-                const data = await response.json();
+                const data = JSON.parse(text);
                 setEvents(data); // Store events data
             } else {
                 throw new Error('An unexpected error occurred');
