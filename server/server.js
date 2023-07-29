@@ -23,7 +23,7 @@ app.get('*', function(req, res) {
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',  // replace with the domain of your client
+    origin: 'https://vast-castle-18920-5c3bebfddd17.herokuapp.com',  // replace with the domain of your client
     credentials: true
 }));
 app.use(express.json()); // for parsing application/json
