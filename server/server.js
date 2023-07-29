@@ -129,6 +129,7 @@ app.post('/create_player_account', async (req, res) => {
 app.post('/login', (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
+    console.log("LOOGGGIIINNN");
 
     // Query the database for a user with the provided username
     const query = 'SELECT * FROM USER WHERE Username = ?';
